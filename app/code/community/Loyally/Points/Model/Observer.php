@@ -23,11 +23,11 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
      *
      * @param $observer
      */
-    public function saveJoinLoyally($observer)
+    public function joinLoyally($observer)
     {
 
         Mage::log("*** Starting observer code for saveJoinLoyally() **** ");
-        $join = Mage::app()->getRequest()->getPost('joinloyally');
+        $join = Mage::app()->getRequest()->getPost('loyallypoints');
 
        	if(!empty($join)) {
          	Mage::Log("User entered email address so let's enrol them on the scheme!");
