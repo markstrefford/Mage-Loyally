@@ -1,0 +1,76 @@
+<?php
+/**
+ *
+ * This source file is (c) 2012 Loyally.me
+ * 
+ * @category    Loyally
+ * @package     Loyally_Points
+ * @copyright   Copyright (c) 2012 Loyally.me
+ * @license     http://loyally.me
+ * 
+ */
+?>
+<form action="" id="checkout-agreements" onsubmit="return false;">
+    <div class="buttons-set">
+        <ul class="form-list">
+            <li>
+                <fieldset>
+                    <ul>
+                        <li class="wide">
+							<?php Mage::Log("**** Start of agreements.phtml code for enroling in membership scheme ****"); ?>
+                       		<?php $app = Mage::app('default'); ?>
+                          	<?php // Get the customers session ?>
+                        	<?php $session = Mage::getSingleton('customer/session',array('name'=>'frontend')); ?>
+                       		<?php if($session->isLoggedIn()): ?>
+                          		<?php // Log that the user is logged in ?>
+                      			<?php Mage::Log("User logged in"); ?>
+                           		<?php // Get the customer info ?>
+                     			<?php $customer = $session->getCustomer(); ?>
+                   				<?php // Log the customer email, firstname and lastname ?>
+                         		<?php Mage::Log("Customer Info: ".$customer->getEmail()." ".$customer->getFirstname()." ".$customer->getLastname());  ?>
+                           		<?php // Check for the user's membership ID 							?>
+								<?php // 											?>
+								<?php // **** NOTE THAT THIS HAS BEEN CREATED ELSEWHERE USING:					?>
+								<?php // http://www.magentocommerce.com/magento-connect/custom-attributes-4340.html		?>
+								<?php // 											?>
+								<?php // In future revisions, let's create this attribute in the setup scripts			?>
+								<?php $membership_id = $customer->getLoyally_membership_id(); ?>
+								<?php Mage::Log("Membership ID".$membership_id); ?>
+                                <?php if(is_null($membership_id)): ?>
+                                	<?php Mage::Log("Not registered for a scheme, so let's enrol"); ?>
+                                  	<?php //echo "Enter 'YES' below to register for our loyalty scheme:";  ?>
+                                 	<label for="loyallypoints-join"><?php echo Mage::helper('loyallypoints')->__('Enter "YES" below to register for our loyalty scheme:') ?></label>
+                                	<div class="input-box">
+                                  		<?php Mage::Log("div input box: email reported is ".$customer->getEmail());  ?>
+                                    	<input type="text" id="loyallypoints-join" class="input-text" name="loyallypoints" title="<?php echo $this->__('Loyally Points') ?>" maxlength="10" />
+									</div>
+								<?php endif; ?>
+                        	<?php endif; ?>
+							<?php Mage::Log("**** End of agreements.phtml code for enroling in membership scheme ****"); ?>
+                        </li>
+                    </ul>
+                </fieldset>
+            </li>
+        </ul>
+    </div>
+
+	<?php // This is to handle any remaining agreements that the site may have ?>
+    <?php if ($this->getAgreements()): ?>
+        <ol class="checkout-agreements">
+            <?php foreach ($this->getAgreements() as $_a): ?>
+            <li>
+                <div class="agreement-content"<?php echo ($_a->getContentHeight() ? ' style="height:' . $_a->getContentHeight() . '"' : '')?>>
+                    <?php if ($_a->getIsHtml()):?>
+                    <?php echo $_a->getContent() ?>
+                    <?php else:?>
+                    <?php echo nl2br($this->htmlEscape($_a->getContent())) ?>
+                    <?php endif; ?>
+                </div>
+                <p class="agree">
+                    <input type="checkbox" id="agreement-<?php echo $_a->getId()?>" name="agreement[<?php echo $_a->getId()?>]" value="1" title="<?php echo $this->htmlEscape($_a->getCheckboxText()) ?>" class="checkbox" /><label for="agreement-<?php echo $_a->getId()?>"><?php echo $_a->getIsHtml() ? $_a->getCheckboxText() : $this->htmlEscape($_a->getCheckboxText()) ?></label>
+                </p>
+            </li>
+            <?php endforeach ?>
+        </ol>
+    <?php endif; ?>
+</form>
