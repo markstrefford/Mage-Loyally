@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * This source file is (c) 2012 Loyally.me
+ * 
+ * @category    Loyally
+ * @package     Loyally_Points
+ * @copyright   Copyright (c) 2012 Loyally.me
+ * @license     http://loyally.me
+ * 
+ */
+-->
+<config>
+    <modules>
+        <PunchTab_Points>
+            <version>0.0.1</version>
+        </PunchTab_Points>
+    </modules>
+
+    <global>
+        <blocks>
+            <points>
+              <class>Loyally_LoyallyPoints_Block</class>
+            </points>
+        </blocks>
+        <helpers>
+            <points>
+                <class>Loyally_LoyallyPoints_Helper</class>
+            </points>
+        </helpers>
+        <models>
+          <points>
+            <class>Loyally_LoyallyPoints_Model</class>
+          </points>
+        </models>
+        <events>
+          <core_block_abstract_to_html_after>
+            <observers>
+              <points_observer>
+                <type>singleton</type>
+                <class>Loyally_LoyallyPoints_Model_Observer</class>
+                <method>coreBlockAbstractToHtmlAfter</method>
+              </points_observer>
+            </observers>
+          </core_block_abstract_to_html_after>
+          <checkout_onepage_controller_success_action>
+            <observers>
+              <points_observer>
+                <type>singleton</type>
+                <class>Loyally_LoyallyPoints_Model_Observer</class>
+                <method>checkoutOnepageControllerSuccessAction</method>
+              </points_observer>
+            </observers>
+          </checkout_onepage_controller_success_action>
+          <checkout_multishipping_controller_success_action>
+            <observers>
+              <points_observer>
+                <type>singleton</type>
+                <class>Loyally_LoyallyPoints_Model_Observer</class>
+                <method>checkoutMultishippingControllerSuccessAction</method>
+              </points_observer>
+            </observers>
+          </checkout_multishipping_controller_success_action>
+        </events>
+    </global>
+
+	<!-- Not needed as no points.xml file and no associted phtml files for diplaying stuff during checkout.  See evernote for more info
+	
+    <frontend>
+      <layout>
+        <updates>
+          <points>
+            <file>points.xml</file>
+          </points>
+        </updates>
+      </layout>
+    </frontend>
+    
+	-->
+	
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                          <children>
+                            <config>
+                              <children>
+                                <points translate="title" module="points">
+                                  <title>Loyally Points</title>
+                                </points>
+                              </children>
+                            </config>
+                          </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>   
+        </acl>
+    </adminhtml>    
+
+    <default>
+      <points>
+        <settings>
+          <loyallyhost>www.loyally.com</pthost>
+        </settings>
+      </points>
+    </default>
+
+</config>

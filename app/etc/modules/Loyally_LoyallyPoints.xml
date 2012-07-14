@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * This source file is (c) 2012 Loyally.me
+ * 
+ * @category    Loyally
+ * @package     Loyally_Points
+ * @copyright   Copyright (c) 2012 Loyally.me
+ * @license     http://loyally.me
+ *
+ * 
+ * *** THIS FILE IS FOR ENROLING A USER IN A SCHEME IF THEY ARE NOT ALREADY ENROLED ****
+ * 
+ * 
+ */
+-->
+<config>
+    <modules>
+        <Loyally_LoyallyPoints>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Checkout />
+                <!-- <Mage_Sales /> -->
+            </depends>
+        </Loyally_LoyallyPoints>
+    </modules>
+</config>
