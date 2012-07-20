@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<config>
+
+  <sections>
+    <points translate="label" module="points">
+      <label>Loyally Points</label>
+      <tab>catalog</tab>
+      <frontend_type>text</frontend_type>
+      <sort_order>1000</sort_order>
+      <show_in_default>1</show_in_default>
+      <show_in_website>1</show_in_website>
+      <show_in_store>1</show_in_store>
+      <groups>
+        <settings translate="label">
+          <label>Main Settings</label>
+          <frontend_type>text</frontend_type>
+          <sort_order>1</sort_order>
+          <show_in_default>1</show_in_default>
+          <show_in_website>1</show_in_website>
+          <show_in_store>1</show_in_store>
+          <comment>
+            <![CDATA[
+            <div style="padding:10px;background-color:#fff;border:1px solid #ddd;margin-bottom:7px;">
+              Instructions to get <b>Loyally Key</b><br/>
+              1. Go to <a href="http://www.loyally.me">www.loyally.me</a> to signup for Key<br/>
+              2. Enter magento store admin email address for "<b>Enter your email address</b>"<br/>
+              3. Enter name of magento store site for "<b>Enter your website</b>" <br/>
+              4. Click on <b>Sign up for free</b> button to complete signup<br/>
+              5. Click on <b>Dashboard</b> from top menu<br/>
+              6. Click on <b>Settings</b> from left menu displayed under <b>Loyalty Program</b><br/>
+              7. Copy/save <b>Access Key</b> displayed on the right side of <b>Settings</b> page<br/>
+              8. Paste Key copied into <b>Loyally Points Key</b> field below<br/>
+              Email support at <a href="mailto:support@loyally.me">support@loyally.me</a>.<br/>
+            </div>
+            ]]>
+          </comment>
+          <fields>
+             <enabled translate="label">
+               <label>Enable Loyally Points</label>
+               <frontend_type>select</frontend_type>
+               <source_model>adminhtml/system_config_source_yesno</source_model>
+               <sort_order>1</sort_order>
+               <show_in_default>1</show_in_default>
+               <show_in_website>1</show_in_website>
+               <show_in_store>1</show_in_store>
+               <comment>
+                 <![CDATA[
+                   <div style="padding:10px;background-color:#fff;border:1px solid #ddd;margin-bottom:7px;">
+                     Select <b>Yes</b> to enable Loyally Points feature.
+                   </div>
+                 ]]>
+               </comment>
+             </enabled>
+             <key translate="label">
+               <label>Loyally Key</label>
+               <frontend_type>text</frontend_type>
+               <sort_order>2</sort_order>
+               <show_in_default>1</show_in_default>
+               <show_in_website>1</show_in_website>
+               <show_in_store>1</show_in_store>
+               <comment>
+                 <![CDATA[
+                   <div style="padding:10px;background-color:#fff;border:1px solid #ddd;margin-bottom:7px;">
+                     Refer to Instructions above.
+                   </div>
+                 ]]>
+               </comment>
+             </key>
+          </fields>
+        </settings>
+      </groups>
+    </points>
+  </sections>
+
+</config>
+

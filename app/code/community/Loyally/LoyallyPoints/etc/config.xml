@@ -12,9 +12,9 @@
 -->
 <config>
     <modules>
-        <PunchTab_Points>
-            <version>0.0.1</version>
-        </PunchTab_Points>
+        <Loyally_LoyallyPoints>
+            <version>0.0.2</version>
+        </Loyally_LoyallyPoints>
     </modules>
 
     <global>
@@ -61,11 +61,22 @@
               </points_observer>
             </observers>
           </checkout_multishipping_controller_success_action>
-        </events>
+        </events>      
+        <!-- Added from http://stackoverflow.com/questions/5961290/adding-attributes-to-customer-entity/5962237#5962237 answer 4 -->
+        <resources>
+        	<loyallypoints_setup>
+                <setup>
+                    <module>Loyally_LoyallyPoints</module>
+                    <class>Mage_Customer_Model_Entity_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </loyallypoints_setup>
+  		</resources>	
     </global>
 
-	<!-- Not needed as no points.xml file and no associted phtml files for diplaying stuff during checkout.  See evernote for more info
-	
+	<!-- Not needed as no points.xml file and no associated phtml files for displaying stuff during checkout.  See evernote for more info
     <frontend>
       <layout>
         <updates>
@@ -101,11 +112,11 @@
     </adminhtml>    
 
     <default>
-      <points>
+      <LoyallyPoints>
         <settings>
-          <loyallyhost>www.loyally.com</pthost>
+          <loyallyhost>www.loyally.com</loyallyhost>
         </settings>
-      </points>
+      </LoyallyPoints>
     </default>
 
 </config>
