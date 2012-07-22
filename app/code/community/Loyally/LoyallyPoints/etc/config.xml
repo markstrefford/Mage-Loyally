@@ -23,16 +23,15 @@
             	<class>Loyally_LoyallyPoints_Model</class>
           	</points>
        	</models>
-        
         <helpers>
-            <points>
+            <loyallypoints>
                 <class>Loyally_LoyallyPoints_Helper</class>
-            </points>
+            </loyallypoints>
         </helpers>
         <blocks>
-            <points>
+            <loyallypoints>
               <class>Loyally_LoyallyPoints_Block</class>
-            </points>
+            </loyallypoints>
         	<checkout>
           		<rewrite>
             		<agreements>Loyally_LoyallyPoints_Block_Checkout_Agreements</agreements>
