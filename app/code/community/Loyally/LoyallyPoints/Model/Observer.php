@@ -26,7 +26,7 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
     public function joinLoyally($observer)
     {
 
-        Mage::log("*** Starting observer code for saveJoinLoyally() **** ");
+        Mage::log("*** Starting observer code for joinLoyally() **** ");
         $join = Mage::app()->getRequest()->getPost('loyallypoints');
 
        	if(!empty($join)) {
@@ -94,7 +94,9 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 
 			Mage::log("*** End of observer code for saveJoinLoyally() **** ");
 
-          }
+         } else {
+            Mage::Log("User did not request to join scheme, so exiting...");
+         }
          
     }
 
@@ -130,11 +132,6 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
     	}
     	return $this;
   	}
-  	
-  	
-	
-	
-	
 	
 	// So this function does all of the work for posting to Loyally.me
   	public function postPointsToLoyally($order_id)
@@ -163,6 +160,8 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 		  	$membership_id = $customer->getLoyally_membership_id();
 		  	Mage::Log("Membership ID ".$membership_id);
 	
+	// **** Need to add something here to fail if no membership ID in the customer entity ****
+			
 	 	  	// Now let's get the user session
 	 	  	$core_session = Mage::getSingleton('core/session');
 	 	  	$visitor_data = $core_session->getVisitorData();

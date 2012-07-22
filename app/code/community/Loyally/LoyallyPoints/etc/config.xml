@@ -18,21 +18,40 @@
     </modules>
 
     <global>
-        <blocks>
-            <points>
-              <class>Loyally_LoyallyPoints_Block</class>
-            </points>
-        </blocks>
+      	<models>
+        	<points>
+            	<class>Loyally_LoyallyPoints_Model</class>
+          	</points>
+       	</models>
+        
         <helpers>
             <points>
                 <class>Loyally_LoyallyPoints_Helper</class>
             </points>
         </helpers>
-        <models>
-          <points>
-            <class>Loyally_LoyallyPoints_Model</class>
-          </points>
-        </models>
+        <blocks>
+            <points>
+              <class>Loyally_LoyallyPoints_Block</class>
+            </points>
+        	<checkout>
+          		<rewrite>
+            		<agreements>Loyally_LoyallyPoints_Block_Checkout_Agreements</agreements>
+           		</rewrite>
+       		</checkout>
+        </blocks>
+        <!-- Added from http://stackoverflow.com/questions/5961290/adding-attributes-to-customer-entity/5962237#5962237 answer 4 -->
+   		<resources>
+    		<loyallypoints_setup>
+       			<setup>
+            		<module>Loyally_LoyallyPoints</module>
+               		<class>Mage_Customer_Model_Entity_Setup</class>
+         		</setup>
+          		<connection>
+            		<use>core_setup</use>
+           		</connection>
+     		</loyallypoints_setup>
+ 		</resources>
+        <!-- Events relating to checkout page and for after a sale is successful -->
         <events>
        		<core_block_abstract_to_html_after>
        	    	<observers>
@@ -50,64 +69,42 @@
        	        		<class>Loyally_LoyallyPoints_Model_Observer</class>
        	        		<method>checkoutOnepageControllerSuccessAction</method>
        	     		</points_observer>
-        	</observers>
-      	</checkout_onepage_controller_success_action>
-      	<checkout_multishipping_controller_success_action>
-      		<observers>
-       			<points_observer>
-        	   		<type>singleton</type>
-            		<class>Loyally_LoyallyPoints_Model_Observer</class>
-           			<method>checkoutMultishippingControllerSuccessAction</method>
-           		</points_observer>
-        	</observers>
-    	</checkout_multishipping_controller_success_action>
-          
-       	<!-- Events relating to signing up for a loyalty scheme -->
-     	<checkout_type_onepage_save_order>
-       		<observers>
-           		<saveCustomerComment>
-           			<class>Loyally_LoyallyPoints_Model_Observer</class>
-              	 	<method>joinLoyally</method>
-       			</saveCustomerComment>
-       		</observers>
-      	</checkout_type_onepage_save_order>
- 		<checkout_type_multishipping_create_orders_single>
-      		<observers>
-           		<saveCustomerComment>
-            		<class>Loyally_LoyallyPoints_Model_Observer</class>
-            		<method>joinLoyally</method>
-       			</saveCustomerComment>
-    	    </observers>
-	   	</checkout_type_multishipping_create_orders_single>
-   	</events>      
-    
-        <!-- Added from http://stackoverflow.com/questions/5961290/adding-attributes-to-customer-entity/5962237#5962237 answer 4 -->
-   	<resources>
-    	<loyallypoints_setup>
-       		<setup>
-            	<module>Loyally_LoyallyPoints</module>
-               	<class>Mage_Customer_Model_Entity_Setup</class>
-         	</setup>
-          	<connection>
-            	<use>core_setup</use>
-           	</connection>
-     	</loyallypoints_setup>
- 	</resources>	
-  </global>
+        		</observers>
+      		</checkout_onepage_controller_success_action>
+      		<checkout_multishipping_controller_success_action>
+      			<observers>
+       				<points_observer>
+        		   		<type>singleton</type>
+            			<class>Loyally_LoyallyPoints_Model_Observer</class>
+           				<method>checkoutMultishippingControllerSuccessAction</method>
+           			</points_observer>
+        		</observers>
+    		</checkout_multishipping_controller_success_action>
+   		</events>      
+  	</global>
 
-	<!-- Not needed as no points.xml file and no associated phtml files for displaying stuff during checkout.  See evernote for more info
-    <frontend>
-      <layout>
-        <updates>
-          <points>
-            <file>points.xml</file>
-          </points>
-        </updates>
-      </layout>
+	<frontend>
+        <events>
+            <checkout_type_onepage_save_order>
+                <observers>
+                    <joinLoyally>
+                        <class>Loyally_LoyallyPoints_Model_Observer</class>
+                        <method>joinLoyally</method>
+                    </joinLoyally>
+                </observers>
+            </checkout_type_onepage_save_order>
+            <checkout_type_multishipping_create_orders_single>
+                <observers>
+                    <joinLoyally>
+                        <class>Loyally_LoyallyPoints_Model_Observer</class>
+                        <method>joinLoyally</method>
+                    </joinLoyally>
+                </observers>
+            </checkout_type_multishipping_create_orders_single>
+        </events>
     </frontend>
     
-	-->
-	
+    <!-- Admin HTML set up for points configuration -->
     <adminhtml>
         <acl>
             <resources>

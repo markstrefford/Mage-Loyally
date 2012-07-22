@@ -22,7 +22,9 @@ class Loyally_LoyallyPoints_Block_Checkout_Agreements extends Mage_Checkout_Bloc
      */
     protected function _toHtml()
     {
+    	// Mage::Log("*** Loyally_LoyallyPoints_Block_Checkout_Agreements - starting _toHtml()");
         $this->setTemplate('loyallypoints/checkout/agreements.phtml');
+		// Mage::Log("*** About to exit from _toHtml()");
         return parent::_toHtml();
     }
 }
