@@ -44,7 +44,7 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 
          	// Create the URL and log it
         	$host = "http://loyally.local:9000";
-         	$url_path = "/api/memberships";
+         	$url_path = "/api/v01/memberships";
          	$url = $host.$url_path;
           	Mage::Log("URL ".$url);
 
@@ -176,7 +176,7 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 	
 	    		// Create the URL and log it (hardcoded for now, not using any config settings from Magento DB)
 		    	$host = "http://loyally.local:9000";
-	   	 		$url_path = "/api/memberships/accrue/";
+	   	 		$url_path = "/api/v01/memberships/accrue/";
 
     			$membership_id = $customer->getLoyally_membership_id();	    
     			$url = $host.$url_path.$membership_id;
