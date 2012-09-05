@@ -39,8 +39,10 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
          	$lastname = $customer->getLastname();
           	Mage::Log("About to register Customer : ".$email." ".$firstname." ".$lastname);
 
-          	// Get unique key for this online store
+           	// Will replace $scheme_id = 1 below with a call to get the unique key for this account,
+          	// but need to tweak to API to base it on a unique key first!!
          	$key = Mage::getStoreConfig('points/settings/key');
+         	// $scheme_id = 111;
 
          	// Create the URL and log it
         	$host = "http://loyally.local:9000";
@@ -49,12 +51,7 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
           	Mage::Log("URL ".$url);
 
    			// Create the body for the json message
-      		// $json_message = '{"key" : '.$key.', "email" : "'.$email.'"}';
-   			$json_key = '"key" : '.$key;
-			$json_email = '"email" : '.$email;
-			$json_plugin_type = '"plugin_type" : magento_1.6.0';
-			$json_plugin_version = '"plugin_version" : "0.0.2"';
-			$json_message = '{'.$json_key.', '.$json_email.', '.$json_plugin_type.', '.$json_plugin_version.'}';
+      		$json_message = '{"key" : '.$key.', "email" : "'.$email.'"}';
        		Mage::Log("Json message: ".$json_message);
 
       		// Set headers for json message
@@ -153,82 +150,82 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
     	  	$customer = $session->getCustomer();
     	  	Mage::Log("Customer Info: ".$customer->getEmail()." ".$customer->getFirstname()." ".$customer->getLastname());
 		  	// 
-		  	
 		  	// Check for the user's membership ID
+		  	// 
+		  	// **** NOTE THAT THIS HAS BEEN CREATED ELSEWHERE USING:
+		  	// http://www.magentocommerce.com/magento-connect/custom-attributes-4340.html
+		  	// 
+		  	// In future revisions, let's create this attribute in the setup scripts
+		  	//
 		  	$membership_id = $customer->getLoyally_membership_id();
-			if (!is_null($membership_id)) {
-				Mage::Log("User logged in and their membership ID is ".$membership_id);
+		  	Mage::Log("Membership ID ".$membership_id);
+	
+	// **** Need to add something here to fail if no membership ID in the customer entity ****
 			
-	 	  		// Now let's get the user session
-	 	  		$core_session = Mage::getSingleton('core/session');
-	 	  		$visitor_data = $core_session->getVisitorData();
+	 	  	// Now let's get the user session
+	 	  	$core_session = Mage::getSingleton('core/session');
+	 	  	$visitor_data = $core_session->getVisitorData();
 	
-	 	  		// Start with a 0 price total
-	 	  		$price = 0;
-	 	  		// Get the order model
-	 	  		$order = Mage::getModel('sales/order');
-	 	  		$order->load($order_id);
-	 	  		// Log getting the order ID data
-				Mage::Log($order->getData());
-	    		// Get and log the subtotal
-	    		Mage::Log("Subtotal: ".$order->getSubtotal());
-	    		$points = $order->getSubtotal();    	
+	 	  	// Start with a 0 price total
+	 	  	$price = 0;
+	 	  	// Get the order model
+	 	  	$order = Mage::getModel('sales/order');
+	 	  	$order->load($order_id);
+	 	  	// Log getting the order ID data
+			Mage::Log($order->getData());
+	    	// Get and log the subtotal
+	    	Mage::Log("Subtotal: ".$order->getSubtotal());
+	    	$points = $order->getSubtotal();
+	    	
 	
-	    		// Create the URL and log it (hardcoded for now, not using any config settings from Magento DB)
-		    	$host = "http://loyally.local:9000";
-	   	 		$url_path = "/api/memberships/accrue/";
+	    	// Create the URL and log it
+		    $host = "http://loyally.local:9000";
+	   	 	$url_path = "/api/memberships/accrue/";
 
-    			$membership_id = $customer->getLoyally_membership_id();	    
-    			$url = $host.$url_path.$membership_id;
-	    		Mage::Log("URL ".$url);
-		
-				// Create the body for the json message
-				$json_key = '"key" : '.Mage::getStoreConfig('points/settings/key');
-	    		$json_points = '"points" : '.$points;
-				$json_plugin_type = '"plugin_type" : magento_1.6.0';
-				$json_plugin_version = '"plugin_version" : "0.0.2"';
-				$json_message = '{'.$json_key.', '.$json_points.', '.$json_plugin_type.', '.$json_plugin_version.'}';
-				Mage::Log("Json message: ".$json_message);
+    		$membership_id = $customer->getLoyally_membership_id();	    
+    		$url = $host.$url_path.$membership_id;
+	    	Mage::Log("URL ".$url);
 	
-				// Code derived from http://stackoverflow.com/questions/3958226/using-put-method-with-php-curl-library
+			// Create the body for the json message
+	    	$json_message = '{"points" : '.$points.'}';
+			Mage::Log("Json message: ".$json_message);
+	
+			// Code derived from http://stackoverflow.com/questions/3958226/using-put-method-with-php-curl-library
 
-				// Write the json message into a temporary file
-				$putData = tmpfile();
-				$putString = stripslashes($json_message);
-				fwrite($putData, $putString);
-				fseek($putData, 0);
+			// Write the json message into a temporary file
+			$putData = tmpfile();
+			$putString = stripslashes($json_message);
+			fwrite($putData, $putString);
+			fseek($putData, 0);
 		
-				// Set headers for json message
-				$headers = array(
-	 			   'Accept: application/json',
-	 			   'Content-Type: application/json',
-				);
+			// Set headers for json message
+			$headers = array(
+	 		   'Accept: application/json',
+	 		   'Content-Type: application/json',
+			);
 			
-				// Now initialise CURL and set parameters
-	  			$ch = curl_init();
-				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-				curl_setopt($ch, CURLOPT_URL, $url);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
-				curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-				curl_setopt($ch, CURLOPT_PUT, true);
-		
-				// Now execute the CURL command
-				$output = curl_exec($ch);
-				Mage::Log("Curl output : ".$output);
-		    	Mage::Log(curl_getinfo($ch));
-				fclose($putData);
-    			curl_close($ch);
-				
-				// **** Need to handle failed CURL command here...
-				
-			} else {
-				Mage::Log("**** User logged in but not enrolled, so doesn't accrue points!!'");	
-			}
+			// Now initialise CURL and set parameters
+	  		$ch = curl_init();
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
+			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+			curl_setopt($ch, CURLOPT_PUT, true);
+	
+			// Now execute the CURL command
+			$output = curl_exec($ch);
+			Mage::Log("Curl output : ".$output);
+		    Mage::Log(curl_getinfo($ch));
+			fclose($putData);
+    		curl_close($ch);
+			
+			Mage::Log("***** End of posting points to loyally.me function *****");
+			
 		 } else {
 		 	Mage::Log("User not logged in so doesn't accrue points!!");
+			Mage::Log("***** End of posting points to loyally.me function *****");
 			
 		 }
-		Mage::Log("***** End of posting points to loyally.me function *****");
   	}
 	 
 }
