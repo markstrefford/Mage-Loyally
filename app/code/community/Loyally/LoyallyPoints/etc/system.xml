@@ -2,7 +2,7 @@
 <config>
 
   <sections>
-    <points translate="label" module="points">
+    <loyallypoints translate="label" module="loyallypoints">
       <label>Loyally Points</label>
       <tab>catalog</tab>
       <frontend_type>text</frontend_type>
@@ -64,7 +64,7 @@
           </fields>
         </settings>
       </groups>
-    </points>
+    </loyallypoints>
   </sections>
 
 </config>
