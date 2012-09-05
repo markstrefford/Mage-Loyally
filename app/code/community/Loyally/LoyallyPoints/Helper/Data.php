@@ -19,7 +19,7 @@ class Loyally_LoyallyPoints_Helper_Data extends Mage_Core_Helper_Abstract
  	// Check whether the config setting for points is enabled
   	public function isLoyallyEnabled()
   	{
-    	if(Mage::getStoreConfig('loyallypoints/settings/enabled') == 0)
+    	if(Mage::getStoreConfig('points/settings/enabled') == 0)
     	  return FALSE;
     	else
     	  return TRUE;
