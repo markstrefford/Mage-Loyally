@@ -19,9 +19,9 @@
 
     <global>
       	<models>
-        	<points>
+        	<loyallypoints>
             	<class>Loyally_LoyallyPoints_Model</class>
-          	</points>
+          	</loyallypoints>
        	</models>
         <helpers>
             <loyallypoints>
@@ -54,29 +54,29 @@
         <events>
        		<core_block_abstract_to_html_after>
        	    	<observers>
-       	      		<points_observer>
+       	      		<loyallypoints_observer>
        	      		  	<type>singleton</type>
        	        		<class>Loyally_LoyallyPoints_Model_Observer</class>
        	        		<method>coreBlockAbstractToHtmlAfter</method>
-       	      		</points_observer>
+       	      		</loyallypoints_observer>
        	    	</observers>
       		</core_block_abstract_to_html_after>
      		<checkout_onepage_controller_success_action>
        	    	<observers>
-       	    		<points_observer>
+       	    		<loyallypoints_observer>
        	        		<type>singleton</type>
        	        		<class>Loyally_LoyallyPoints_Model_Observer</class>
        	        		<method>checkoutOnepageControllerSuccessAction</method>
-       	     		</points_observer>
+       	     		</loyallypoints_observer>
         		</observers>
       		</checkout_onepage_controller_success_action>
       		<checkout_multishipping_controller_success_action>
       			<observers>
-       				<points_observer>
+       				<loyallypoints_observer>
         		   		<type>singleton</type>
             			<class>Loyally_LoyallyPoints_Model_Observer</class>
            				<method>checkoutMultishippingControllerSuccessAction</method>
-           			</points_observer>
+           			</loyallypoints_observer>
         		</observers>
     		</checkout_multishipping_controller_success_action>
    		</events>      
@@ -113,9 +113,9 @@
                           <children>
                             <config>
                               <children>
-                                <points translate="title" module="points">
+                                <loyallypoints translate="title" module="loyallypoints">
                                   <title>Loyally Points</title>
-                                </points>
+                                </loyallypoints>
                               </children>
                             </config>
                           </children>
@@ -129,7 +129,7 @@
     <default>
       <LoyallyPoints>
         <settings>
-          <loyallyhost>www.loyally.com</loyallyhost>
+          <loyallyhost>http://www.loyally.me</loyallyhost>
         </settings>
       </LoyallyPoints>
     </default>

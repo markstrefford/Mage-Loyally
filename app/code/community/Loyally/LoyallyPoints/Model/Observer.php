@@ -40,7 +40,7 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
           	Mage::Log("About to register Customer : ".$email." ".$firstname." ".$lastname);
 
           	// Get unique key for this online store
-         	$key = Mage::getStoreConfig('points/settings/key');
+         	$key = Mage::getStoreConfig('loyallypoints/settings/key');
 
          	// Create the URL and log it
         	$host = "http://loyally.local:9000";
@@ -50,9 +50,9 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 
    			// Create the body for the json message
       		// $json_message = '{"key" : '.$key.', "email" : "'.$email.'"}';
-   			$json_key = '"key" : '.$key;
-			$json_email = '"email" : '.$email;
-			$json_plugin_type = '"plugin_type" : magento_1.6.0';
+   			$json_key = '"key" : "'.$key.'"';
+			$json_email = '"email" : "'.$email.'"';
+			$json_plugin_type = '"plugin_type" : "magento_1.6.0"';
 			$json_plugin_version = '"plugin_version" : "0.0.2"';
 			$json_message = '{'.$json_key.', '.$json_email.', '.$json_plugin_type.', '.$json_plugin_version.'}';
        		Mage::Log("Json message: ".$json_message);
@@ -63,6 +63,9 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
          		'Content-Type: application/json',
       		);
 
+			//$headers = array(
+         	//	'application/json'
+      		//);
         	// Now initialise CURL and set parameters
             $ch = curl_init();
          	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -83,8 +86,9 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 
            	Mage::Log("Let's check we have a membership ID or is it null");
      		if(!is_null($membership_id)) {
-  			Mage::Log("Returned membership id : ".$membership_id);
-    	    $customer->setLoyally_membership_id($membership_id);
+  				Mage::Log("Returned membership id : ".$membership_id);
+    	    	$customer->setLoyally_membership_id($membership_id);
+				Mage::Log("Membership ID saved is : ".$customer->getLoyally_membership_id());
      		} else {
            	       Mage:Log("No membership ID returned!!");
       		}
@@ -156,6 +160,7 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 		  	
 		  	// Check for the user's membership ID
 		  	$membership_id = $customer->getLoyally_membership_id();
+			Mage::Log("Membership ID stored : ".$membership_id);
 			if (!is_null($membership_id)) {
 				Mage::Log("User logged in and their membership ID is ".$membership_id);
 			
@@ -183,7 +188,7 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 	    		Mage::Log("URL ".$url);
 		
 				// Create the body for the json message
-				$json_key = '"key" : '.Mage::getStoreConfig('points/settings/key');
+				$json_key = '"key" : '.Mage::getStoreConfig('loyallypoints/settings/key');
 	    		$json_points = '"points" : '.$points;
 				$json_plugin_type = '"plugin_type" : magento_1.6.0';
 				$json_plugin_version = '"plugin_version" : "0.0.2"';
