@@ -22,15 +22,10 @@
             <![CDATA[
             <div style="padding:10px;background-color:#fff;border:1px solid #ddd;margin-bottom:7px;">
               Instructions to get <b>Loyally Key</b><br/>
-              1. Go to <a href="http://www.loyally.me">www.loyally.me</a> to signup for Key<br/>
-              2. Enter magento store admin email address for "<b>Enter your email address</b>"<br/>
-              3. Enter name of magento store site for "<b>Enter your website</b>" <br/>
-              4. Click on <b>Sign up for free</b> button to complete signup<br/>
-              5. Click on <b>Dashboard</b> from top menu<br/>
-              6. Click on <b>Settings</b> from left menu displayed under <b>Loyalty Program</b><br/>
-              7. Copy/save <b>Access Key</b> displayed on the right side of <b>Settings</b> page<br/>
-              8. Paste Key copied into <b>Loyally Points Key</b> field below<br/>
-              Email support at <a href="mailto:support@loyally.me">support@loyally.me</a>.<br/>
+              1. Go to <a href="http://www.loyally.me">www.loyally.me</a> to signup for our alpha program<br/>
+              2. Once we accept you, we'll send you a welcome email
+              3. Enter the key from your welcome email below and select Yes to enable the plugin.
+              4. We're here to help you get started by emailing support at <a href="mailto:support@loyally.me">support@loyally.me</a>.<br/>
             </div>
             ]]>
           </comment>
