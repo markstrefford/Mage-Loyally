@@ -13,7 +13,7 @@ $installer->startSetup();
 
 $installer->addAttribute(
     'customer',
-    'Loyally_LoyallyPoints',
+    'membership_id',
     array(
         'group'                => 'Default',
         'type'                 => 'varchar',
@@ -22,7 +22,7 @@ $installer->addAttribute(
         'source'               => '',
         'global'               => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_STORE,
         'required'             => false,
-        'default'              => '',
+        'default'              => '0',
         'visible_on_front'     => 1,
         'used_for_price_rules' => 0,
         'adminhtml_only'       => 1,

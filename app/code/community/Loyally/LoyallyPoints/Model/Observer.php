@@ -87,8 +87,11 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
            	Mage::Log("Let's check we have a membership ID or is it null");
      		if(!is_null($membership_id)) {
   				Mage::Log("Returned membership id : ".$membership_id);
-    	    	$customer->setLoyally_membership_id($membership_id);
-				Mage::Log("Membership ID saved is : ".$customer->getLoyally_membership_id());
+    	    	$customer->setMembership_id($membership_id);
+				// $product->getResource()->saveAttribute($product, "name_of_your_attribute"); // From http://stackoverflow.com/questions/2418698/magento-user-created-attribute-for-products-is-not-saved
+				// $customer->saveAttribute($customer, "membership_id");
+				$customer->save();
+				Mage::Log("Membership ID saved is : ".$customer->getMembership_id());
      		} else {
            	       Mage:Log("No membership ID returned!!");
       		}
@@ -154,12 +157,16 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
     	{
     	  	Mage::Log("User logged in");
     	  	// Get the customer info
-    	  	$customer = $session->getCustomer();
+			// From http://stackoverflow.com/questions/2418698/magento-user-created-attribute-for-products-is-not-saved
+			//$collection->addAttributeToSelect("my_update");
+			$customer = $session->getCustomer();
+			// $customer->getAttributes("membership_id");
     	  	Mage::Log("Customer Info: ".$customer->getEmail()." ".$customer->getFirstname()." ".$customer->getLastname());
 		  	// 
+		  	Mage::Log("Membership ID saved is : ".$customer->getMembership_id());
 		  	
 		  	// Check for the user's membership ID
-		  	$membership_id = $customer->getLoyally_membership_id();
+		  	$membership_id = $customer->getMembership_id();
 			Mage::Log("Membership ID stored : ".$membership_id);
 			if (!is_null($membership_id)) {
 				Mage::Log("User logged in and their membership ID is ".$membership_id);
@@ -183,7 +190,9 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 		    	$host = "http://loyally.local:9000";
 	   	 		$url_path = "/api/v01/memberships/accrue/";
 
-    			$membership_id = $customer->getLoyally_membership_id();	    
+				Mage::Log("Membership ID saved is : ".$customer->getMembership_id());
+				
+    			$membership_id = $customer->getMembership_id();	    
     			$url = $host.$url_path.$membership_id;
 	    		Mage::Log("URL ".$url);
 		
