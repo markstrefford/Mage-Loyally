@@ -197,9 +197,9 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 	    		Mage::Log("URL ".$url);
 		
 				// Create the body for the json message
-				$json_key = '"key" : '.Mage::getStoreConfig('loyallypoints/settings/key');
-	    		$json_points = '"points" : '.$points;
-				$json_plugin_type = '"plugin_type" : magento_1.6.0';
+				$json_key = '"key" : "'.Mage::getStoreConfig('loyallypoints/settings/key').'"';
+	    		$json_points = '"points" : "'.$points.'"';
+				$json_plugin_type = '"plugin_type" : "magento_1.6.0"';
 				$json_plugin_version = '"plugin_version" : "0.0.2"';
 				$json_message = '{'.$json_key.', '.$json_points.', '.$json_plugin_type.', '.$json_plugin_version.'}';
 				Mage::Log("Json message: ".$json_message);
@@ -225,7 +225,10 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 );
 				curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 				curl_setopt($ch, CURLOPT_PUT, true);
-		
+				// Need these to attach the json message to CURL PUT
+				curl_setopt($ch, CURLOPT_INFILE, $putData);
+				curl_setopt($ch, CURLOPT_INFILESIZE, strlen($putString));
+				
 				// Now execute the CURL command
 				$output = curl_exec($ch);
 				Mage::Log("Curl output : ".$output);
