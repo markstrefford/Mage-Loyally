@@ -184,7 +184,7 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 				Mage::Log($order->getData());
 	    		// Get and log the subtotal
 	    		Mage::Log("Subtotal: ".$order->getSubtotal());
-	    		$points = $order->getSubtotal();    	
+	    		$points = intval($order->getSubtotal());    	
 	
 	    		// Create the URL and log it (hardcoded for now, not using any config settings from Magento DB)
 		    	$host = "http://loyally.local:9000";
