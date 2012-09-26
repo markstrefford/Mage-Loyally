@@ -43,7 +43,7 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
          	$key = Mage::getStoreConfig('loyallypoints/settings/key');
 
          	// Create the URL and log it
-        	$host = "http://loyally.local:9000";
+        	$host = "http://obscure-springs-7646.herokuapp.com";
          	$url_path = "/api/v01/memberships";
          	$url = $host.$url_path;
           	Mage::Log("URL ".$url);
@@ -187,7 +187,7 @@ class Loyally_LoyallyPoints_Model_Observer extends Varien_Object
 	    		$points = intval($order->getSubtotal());    	
 	
 	    		// Create the URL and log it (hardcoded for now, not using any config settings from Magento DB)
-		    	$host = "http://loyally.local:9000";
+		    	$host = "http://obscure-springs-7646.herokuapp.com";
 	   	 		$url_path = "/api/v01/memberships/accrue/";
 
 				Mage::Log("Membership ID saved is : ".$customer->getMembership_id());
